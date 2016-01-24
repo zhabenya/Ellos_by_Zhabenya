@@ -1,5 +1,7 @@
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import utils.ConfigData;
 
 import java.io.IOException;
 
@@ -106,6 +108,10 @@ public class LoginPage {
         return checkEmptyFieldError("LoginEmptyFieldsError", "Måste ange ett lösenord.", "See empty password error");
     }
 
+    public boolean checkLoginEmptyFieldsError() {
+        return checkLoginEmptyEmailFieldError() && checkLoginEmptyPasswordFieldError();
+    }
+
     public void fillRegistrationEmailField(String email) {
         try {
             web.fillField("RegistrationEmailInput", email);
@@ -191,4 +197,11 @@ public class LoginPage {
         return checkRegistrationError("Lösenord och bekräfta lösenord överensstämmer inte", "See passwords don't match error");
     }
 
+    public void submitForm() {
+        try {
+            web.driver.findElement(ConfigData.ui("LoginPassInput")).sendKeys(Keys.ENTER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

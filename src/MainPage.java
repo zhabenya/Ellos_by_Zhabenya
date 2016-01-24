@@ -37,4 +37,11 @@ public class MainPage {
     }
 
 
+    public void logout() {
+        try {
+            web.clickElement("LogoutButton");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
