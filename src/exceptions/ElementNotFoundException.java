@@ -7,8 +7,8 @@ import java.io.IOException;
  */
 public class ElementNotFoundException extends IOException {
 
-    public ElementNotFoundException() {
-        super("Element not found");
+    public ElementNotFoundException(String locator) {
+        super("Element with locator " + locator + " not found");
     }
 
 }

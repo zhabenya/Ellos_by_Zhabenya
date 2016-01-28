@@ -1,47 +1,75 @@
 package utils;
 
+import exceptions.ElementNotFoundException;
 import org.openqa.selenium.By;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class ConfigData {
 
     //TODO Maven
-    public static String uiMappingFile = "/UIMapping.properties";
+    private static ConfigData instance;
+    private static final String UI_MAPPING_FILE = "src/resources/UIMapping.properties";
+    private Map<String, String> map;
+    private Properties properties;
 
-    public static String getValueFromFile(String key, String fileName) throws IOException {
+    private ConfigData(){
+        this.properties = new Properties();
+        try {
+            this.map = readPropertiesFileAsMap();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        Properties p = new Properties();
-
-        p.load(ConfigData.class.getResourceAsStream(uiMappingFile));
-
-        return (p.getProperty(key));
     }
 
+    public static ConfigData getConfig() {
+        if (instance == null) {
+            instance = new ConfigData();
+        }
 
-    public static By ui(String key) throws IOException {
-        String[] partsOfLocators = getValueFromFile(key, uiMappingFile).split("\"");
-        String findMethod = partsOfLocators[0].substring(0, partsOfLocators[0].length() - 1);
+        return instance;
+    }
+
+    private Map<String, String> readPropertiesFileAsMap() throws IOException {
+        FileInputStream inputStream = new FileInputStream(UI_MAPPING_FILE);
+        properties.load(inputStream);
+        return map = new HashMap<>((Map) properties);
+    }
+
+    public By ui(String key) throws ElementNotFoundException {
+
+        String[] partsOfLocators = map.get(key).split("\"");
+
+        String method = partsOfLocators[0].substring(0, partsOfLocators[0].length() - 1);
         String target = partsOfLocators[1];
 
 /*        System.out.println(key);                //Logo
         System.out.println(partsOfLocators[0]); //cssSelector(
-        System.out.println(findMethod);          //cssSelector
+        System.out.println(method);          //cssSelector
         System.out.println(target);             //.ellos.active*/
 
         // Return By class with appropriate method and target
-        if (findMethod.equals("xpath")) {
+        if (method.equals("xpath")) {
             return By.xpath(target);
-        } else if (findMethod.equals("cssSelector")) {
+        } else if (method.equals("cssSelector")) {
             return By.cssSelector(target);
-        } else if (findMethod.equals("id")) {
+        } else if (method.equals("id")) {
             return By.id(target);
-        } else {
+        } else if (method.equals("className")) {
             return By.className(target);
+        } else {
+            throw new ElementNotFoundException(key);
         }
 
     }
+
+
+
 
 
 }
