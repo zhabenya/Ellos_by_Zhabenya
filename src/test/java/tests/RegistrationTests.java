@@ -1,9 +1,10 @@
-package tests.java;
+package tests;
 
+import data.UserData;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertTrue;
-import static utils.Generator.generateEmail;
 
 /**
  * Created by zhabenya on 19.01.16.
@@ -11,19 +12,14 @@ import static utils.Generator.generateEmail;
 
 public class RegistrationTests extends ClassFixture {
 
-    private String myEmail = "rude.zhabenya@gmail.com";
-    private String pass = "gr@yBulb40";
-
-    @Test
-    public void registrationPositiveTest(){
-        header.clickLogo();
+    @Test(dataProviderClass = UserData.class, dataProvider = "users")
+    public void registrationPositiveTest(String email, String pass){
         header.goToLoginPage();
 
-        String email = generateEmail();
         loginPage.fillRegistrationEmailField(email);
         loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField("12345");
-        loginPage.fillRepeatRegistrationPasswordField("12345");
+        loginPage.fillRegistrationPasswordField(pass);
+        loginPage.fillRepeatRegistrationPasswordField(pass);
         loginPage.uncheckNewsletters();
         loginPage.clickRegisterButton();
 
@@ -33,11 +29,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeEmptyEmailTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativeEmptyEmailTest(String email, String pass){
         header.goToLoginPage();
 
         loginPage.fillRegistrationEmailField("");
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField(pass);
         loginPage.fillRepeatRegistrationPasswordField(pass);
         loginPage.uncheckNewsletters();
@@ -47,10 +44,11 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeEmptyRepeatEmailTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativeEmptyRepeatEmailTest(String email, String pass){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField(email);
         loginPage.fillRepeatRegistrationEmailField("");
         loginPage.fillRegistrationPasswordField(pass);
         loginPage.fillRepeatRegistrationPasswordField(pass);
@@ -61,11 +59,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeEmptyPasswordTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativeEmptyPasswordTest(String email, String pass){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(myEmail);
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField(email);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField("");
         loginPage.fillRepeatRegistrationPasswordField(pass);
         loginPage.uncheckNewsletters();
@@ -75,11 +74,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeEmptyRepeatPasswordTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativeEmptyRepeatPasswordTest(String email, String pass){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(myEmail);
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField(email);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField(pass);
         loginPage.fillRepeatRegistrationPasswordField("");
         loginPage.uncheckNewsletters();
@@ -89,11 +89,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeExistingEmailTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativeExistingEmailTest(String email, String pass){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(myEmail);
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField(email);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField(pass);
         loginPage.fillRepeatRegistrationPasswordField(pass);
         loginPage.uncheckNewsletters();
@@ -103,11 +104,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeExistingEmailSubmitByEnterTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativeExistingEmailSubmitByEnterTest(String email, String pass){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(myEmail);
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField(email);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField(pass);
         loginPage.fillRepeatRegistrationPasswordField(pass);
         loginPage.uncheckNewsletters();
@@ -117,7 +119,8 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeIncorrectEmailTest(){
+    @Parameters({ "pass" })
+    public void registrationNegativeIncorrectEmailTest(String pass){
         header.goToLoginPage();
 
         loginPage.fillRegistrationEmailField("aaa");
@@ -134,10 +137,10 @@ public class RegistrationTests extends ClassFixture {
     * Email length larger then 60 chars
     * */
     @Test
-    public void registrationNegativeLongEmailTest(){
+    @Parameters({"longString", "pass"})
+    public void registrationNegativeLongEmailTest(String longString, String pass){
         header.goToLoginPage();
 
-        String longString = "vveryveryveryveryveryveryveryveryveryverylongstring";
         loginPage.fillRegistrationEmailField(longString);
         loginPage.fillRepeatRegistrationEmailField(longString);
         loginPage.fillRegistrationPasswordField(pass);
@@ -149,11 +152,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeEmailsDontMatchTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativeEmailsDontMatchTest(String email, String pass){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField("aaa" + myEmail);
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField("aaa" + email);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField(pass);
         loginPage.fillRepeatRegistrationPasswordField(pass);
         loginPage.uncheckNewsletters();
@@ -163,11 +167,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativeShortPasswordTest(){
+    @Parameters({ "email" })
+    public void registrationNegativeShortPasswordTest(String email){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(myEmail);
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField(email);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField("1");
         loginPage.fillRepeatRegistrationPasswordField("1");
         loginPage.uncheckNewsletters();
@@ -177,11 +182,12 @@ public class RegistrationTests extends ClassFixture {
     }
 
     @Test
-    public void registrationNegativePasswordsDontMatchTest(){
+    @Parameters({ "email", "pass" })
+    public void registrationNegativePasswordsDontMatchTest(String email, String pass){
         header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(myEmail);
-        loginPage.fillRepeatRegistrationEmailField(myEmail);
+        loginPage.fillRegistrationEmailField(email);
+        loginPage.fillRepeatRegistrationEmailField(email);
         loginPage.fillRegistrationPasswordField(pass);
         loginPage.fillRepeatRegistrationPasswordField("aaa" + pass);
         loginPage.uncheckNewsletters();

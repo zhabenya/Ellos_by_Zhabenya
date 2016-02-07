@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="LoginSuite" verbose="1" >
+    <parameter name="email" value="rude.zhabenya@gmail.com" />
+    <parameter name="pass" value="gr@yBulb40" />
+    <test name="LoginPageTest">
+        <classes>
+            <class name="tests.LoginTests"/>
+            <class name="tests.RegistrationTests"/>
+        </classes>
+    </test>
+    <test name="negativeLongInputsTest">
+        <parameter name="longString" value="veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongstring" />
+        <classes>
+            <class name="tests.LoginTests">
+                <methods>
+                    <include name="loginNegativeLongInputsTest"/>
+                </methods>
+            </class>
+            <class name="tests.RegistrationTests">
+                <methods>
+                    <include name="registrationNegativeLongEmailTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

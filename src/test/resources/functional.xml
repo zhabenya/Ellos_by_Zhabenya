@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="FunctionalSuite" verbose="1" >
+    <test name="Functional">
+        <classes>
+            <class name="tests.ProductTests"/>
+            <class name="tests.BasketTests"/>
+        </classes>
+    </test>
+</suite>

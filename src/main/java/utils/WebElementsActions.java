@@ -1,6 +1,7 @@
 package utils;
 
 import exceptions.ElementNotFoundException;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +15,7 @@ public class WebElementsActions {
     private WebDriver driver;
     private ConfigData config;
     public static WebDriverWait waitForElement;
+    private static final Logger LOG = Logger.getLogger(WebElementsActions.class);
 
     public WebElementsActions(WebDriver driver) {
         this.driver = driver;
@@ -22,14 +24,25 @@ public class WebElementsActions {
     }
 
     /**
-    * CLick button
+    * CLick element
     * */
     public void clickElement(String elementLocator){
         try {
             driver.findElement(config.ui(elementLocator)).click();
+            LOG.info("Click " + elementLocator);
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * CLick button
+     * */
+    public void clickButton(String buttonLocator) {
+        moveDownPage();
+        clickElement(buttonLocator);
+        LOG.info("Click " + buttonLocator);
     }
 
     /**
@@ -50,6 +63,7 @@ public class WebElementsActions {
         try {
             driver.findElement(config.ui(inputLocator)).clear();
             driver.findElement(config.ui(inputLocator)).sendKeys(inputData);
+            LOG.info("Fill " + inputLocator + " with " + inputData);
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
@@ -61,6 +75,7 @@ public class WebElementsActions {
     public void fillField(String inputLocator, String inputData){
         try {
             driver.findElement(config.ui(inputLocator)).sendKeys(inputData);
+            LOG.info("Fill " + inputLocator + " with " + inputData);
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
@@ -72,6 +87,7 @@ public class WebElementsActions {
     public void submitByEnter(String inputLocator){
         try {
             driver.findElement(config.ui(inputLocator)).sendKeys(Keys.ENTER);
+            LOG.info("Click ENTER");
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
@@ -83,6 +99,7 @@ public class WebElementsActions {
     public void selectCheckbox(String checkboxLocator){
         try {
             driver.findElement(config.ui(checkboxLocator)).click();
+            LOG.info("Click " + checkboxLocator);
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
@@ -155,6 +172,7 @@ public class WebElementsActions {
     * */
     public void refreshPage(){
         driver.navigate().refresh();
+        LOG.info("Refresh page");
     }
 
     /**

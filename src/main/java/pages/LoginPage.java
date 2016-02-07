@@ -28,12 +28,6 @@ public class LoginPage {
         return web.checkAtPage("LoginAndRegistration");
     }
 
-    private void clickButton(String buttonLocator, String message) {
-        web.moveDownPage();
-        web.clickElement(buttonLocator);
-        LOG.info(message + buttonLocator);
-    }
-
     private boolean checkError(String messageLocator, String errorMessage, String logMessage) {
         if (web.getElementText(messageLocator).contains(errorMessage)) {
             LOG.info(logMessage + " in " + messageLocator);
@@ -45,18 +39,18 @@ public class LoginPage {
     public void fillLoginEmailField(String email) {
         String locator = "LoginEmailInput";
         web.clearAndFillField(locator, email);
-        LOG.info("Fill email field " + locator);
+//        LOG.info("Fill email field " + locator);
     }
 
     public void fillLoginPasswordField(String pass) {
 //        fillPassword("LoginPassField", "LoginPassInput", pass);
         String locator = "LoginPassField";
         web.fillField(locator, pass);
-        LOG.info("Fill login password field " + locator);
+//        LOG.info("Fill login password field " + locator);
     }
 
     public void clickLoginButton() {
-        clickButton("LoginSubmitButton", "Click login button");
+        web.clickButton("LoginSubmitButton");
     }
 
     public boolean checkLoggedIn() {
@@ -101,35 +95,35 @@ public class LoginPage {
     public void fillRegistrationEmailField(String email) {
         String locator = "RegistrationEmailInput";
         web.clearAndFillField(locator, email);
-        LOG.info("Fill email field " + locator);
+//        LOG.info("Fill email field " + locator);
     }
 
     public void fillRepeatRegistrationEmailField(String email) {
         String locator = "RepeatEmailInput";
         web.clearAndFillField(locator, email);
-        LOG.info("Fill repeat email field " + locator);
+//        LOG.info("Fill repeat email field " + locator);
     }
 
     public void fillRegistrationPasswordField(String pass) {
         String locator = "RegistrationPassInput";
         web.fillField(locator, pass);
-        LOG.info("Fill password field " + locator);
+//        LOG.info("Fill password field " + locator);
     }
 
     public void fillRepeatRegistrationPasswordField(String pass) {
         String locator = "RepeatPassInput";
         web.fillField(locator, pass);
-        LOG.info("Fill repeat password field " + locator);
+//        LOG.info("Fill repeat password field " + locator);
     }
 
     public void uncheckNewsletters() {
         String locator = "NewsletterCheckbox";
         web.selectCheckbox(locator);
-        LOG.info("Uncheck newsletters " + locator);
+//        LOG.info("Uncheck newsletters " + locator);
     }
 
     public void clickRegisterButton() {
-        clickButton("RegistrationSubmitButton", "Click register button ");
+        web.clickButton("RegistrationSubmitButton");
     }
 
     public boolean checkRegistered() {
@@ -178,11 +172,11 @@ public class LoginPage {
 
     public void submitLoginFormByEnter() {
         web.submitByEnter("LoginPassInput");
-        LOG.info("Clicked ENTER");
+//        LOG.info("Clicked ENTER");
     }
 
     public void submitRegistrationFormByEnter() {
         web.submitByEnter("RegistrationPassField");
-        LOG.info("Clicked ENTER");
+//        LOG.info("Clicked ENTER");
     }
 }

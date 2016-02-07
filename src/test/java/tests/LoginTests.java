@@ -1,5 +1,6 @@
-package tests.java;
+package tests;
 
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertTrue;
@@ -10,16 +11,13 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class LoginTests extends ClassFixture {
 
-    private String myEmail = "rude.zhabenya@gmail.com";
-    private String pass = "gr@yBulb40";
-
     @Test
-    public void loginPositiveTest(){
-        header.clickLogo();
+    @Parameters({ "email", "pass" })
+    public void loginPositiveTest(String email, String password){
         header.goToLoginPage();
 
-        loginPage.fillLoginEmailField(myEmail);
-        loginPage.fillLoginPasswordField(pass);
+        loginPage.fillLoginEmailField(email);
+        loginPage.fillLoginPasswordField(password);
 
         loginPage.clickLoginButton();
 //        assertTrue(loginPage.checkLoggedIn());
@@ -28,43 +26,47 @@ public class LoginTests extends ClassFixture {
     }
 
     @Test
-    public void loginNegativeNotRegisteredEmailTest(){
+    @Parameters({"pass"})
+    public void loginNegativeNotRegisteredEmailTest(String password){
         header.goToLoginPage();
 
         loginPage.fillLoginEmailField("admin@gmail.com");
-        loginPage.fillLoginPasswordField(pass);
+        loginPage.fillLoginPasswordField(password);
 
         loginPage.clickLoginButton();
         assertTrue(loginPage.checkLoginError());
     }
 
     @Test
-    public void loginNegativeNotRegisteredEmailSubmitByEnterTest(){
+    @Parameters({"pass"})
+    public void loginNegativeNotRegisteredEmailSubmitByEnterTest(String password){
         header.goToLoginPage();
 
         loginPage.fillLoginEmailField("admin@gmail.com");
-        loginPage.fillLoginPasswordField(pass);
+        loginPage.fillLoginPasswordField(password);
 
         loginPage.submitLoginFormByEnter();
         assertTrue(loginPage.checkLoginError());
     }
 
     @Test
-    public void loginNegativeEmptyEmailFieldTest(){
+    @Parameters({"pass"})
+    public void loginNegativeEmptyEmailFieldTest(String password){
         header.goToLoginPage();
 
         loginPage.fillLoginEmailField("");
-        loginPage.fillLoginPasswordField(pass);
+        loginPage.fillLoginPasswordField(password);
 
         loginPage.clickLoginButton();
         assertTrue(loginPage.checkLoginEmptyEmailFieldError());
     }
 
     @Test
-    public void loginNegativeEmptyPasswordFieldTest(){
+    @Parameters({"email"})
+    public void loginNegativeEmptyPasswordFieldTest(String email){
         header.goToLoginPage();
 
-        loginPage.fillLoginEmailField(myEmail);
+        loginPage.fillLoginEmailField(email);
         loginPage.fillLoginPasswordField("");
 
         loginPage.clickLoginButton();
@@ -83,10 +85,10 @@ public class LoginTests extends ClassFixture {
     }
 
     @Test
-    public void loginNegativeLongInputsTest(){
+    @Parameters({"longString"})
+    public void loginNegativeLongInputsTest(String longString){
         header.goToLoginPage();
 
-        String longString = "veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongstring";
         loginPage.fillLoginEmailField(longString);
         loginPage.fillLoginPasswordField(longString);
 

@@ -1,5 +1,7 @@
-package tests.java;
+package tests;
 
+import org.testng.annotations.AfterGroups;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -9,22 +11,33 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by zhabenya on 27.01.16.
  */
-public class ProductTests extends ClassFixture {
+public class ProductTests extends ProductsFixture {
+
+    @BeforeGroups("logged")
+    public static void setUpGroup() throws Exception {
+        header.clickLogo();
+        header.goToLoginPage();
+        loginPage.fillLoginEmailField("rude.zhabenya@gmail.com");
+        loginPage.fillLoginPasswordField("gr@yBulb40");
+        loginPage.clickLoginButton();
+    }
+
+    @AfterGroups("logged")
+    public void tearDownTest(){
+        header.logout();
+    }
 
     @BeforeMethod
     public static void setUpTest() throws Exception {
-        String category = "WomenClothes";
-        String subcategory = "Tops";
-
         header.clickLogo();
-        header.goToProductList(category);
-        productListPage.goToSubcategory(subcategory);
+        header.goToProductList("WomenClothes");
+        productListPage.goToSubcategory("Tops");
         productListPage.goToProduct();
+        productPage.checkProductInfo();
         productPage.scrollToFields();
     }
 
     @Test
-//            (groups = {"not logged user"})
     public void positiveTest(){
         productPage.selectColor();
         productPage.selectSize();
@@ -33,14 +46,12 @@ public class ProductTests extends ClassFixture {
     }
 
     @Test
-//            (groups = {"not logged user"})
     public void negativeAddToCartNoSize(){
         productPage.clickAddToCartButton();
         assertTrue(productPage.checkSizeNotSelectedError());
     }
 
     @Test
-//            (groups = {"not logged user"})
     public void addToWishList(){
         productPage.selectColor();
         productPage.selectSize();
@@ -48,35 +59,37 @@ public class ProductTests extends ClassFixture {
         assertTrue(loginPage.checkAtLoginPage());
     }
 
+    @Test(groups = "logged")
+    public void loggedAddToWishList(){
+        productPage.selectColor();
+        productPage.selectSize();
+        productPage.addToWishList();
+        assertTrue(productPage.checkItemAddedToWishList());
+    }
+
     @Test
     public void viewFullImage(){
         productPage.clickImage();
         assertTrue(productPage.checkFullImage());
+        productPage.closeFullImage();
     }
 
     @Test
     public void switchTabs() {
-        productPage.clickDescriptionTab();
-        assertTrue(productPage.isDescriptionTabEnabled());
-        productPage.clickRatingTab();
-        assertTrue(productPage.isRatingTabEnabled());
-        productPage.clickDeliveryTab();
-        assertTrue(productPage.isDeliveryTabEnabled());
-        productPage.clickSizeguideTab();
-        assertTrue(productPage.isSizeguideTabEnabled());
+        productPage.goToTabs();
+        assertTrue(productPage.checkTabs());
     }
 
     @Test
     public void showMoreAboutProduct(){
-        productPage.clickRatingTab();
         productPage.clickShowMoreLink();
-        assertTrue(productPage.isDescriptionTabEnabled());
+        assertTrue(productPage.checkDescriptionTabEnabled());
     }
 
     @Test
     public void viewRating(){
         productPage.clickRatingLink();
-        assertTrue(productPage.isRatingTabEnabled());
+        assertTrue(productPage.checkRatingTabEnabled());
     }
 
     @Test
@@ -84,4 +97,12 @@ public class ProductTests extends ClassFixture {
         productPage.clickWriteReviewButton();
         assertTrue(loginPage.checkAtLoginPage());
     }
+
+    @Test(groups = "logged")
+    public void loggedWriteReview(){
+        productPage.clickWriteReviewButton();
+        assertTrue(productPage.checkReviewFormEnabled());
+    }
+
+
 }

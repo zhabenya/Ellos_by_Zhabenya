@@ -21,12 +21,12 @@ public class Header {
 
     public void clickLogo() {
         web.clickElement("Logo");
-        LOG.info("Click on Logo Button");
+//        LOG.info("Click on Logo Button");
     }
 
     public void goToLoginPage() {
         web.clickElement("LoginPageLink");
-        LOG.info("Go to login page");
+//        LOG.info("Go to login page");
     }
 
     public void logout() {

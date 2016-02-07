@@ -11,9 +11,8 @@ import java.util.Properties;
 
 public class ConfigData {
 
-    //TODO Maven
     private static ConfigData instance;
-    private static final String UI_MAPPING_FILE = "src/resources/UIMapping.properties";
+    private static final String UI_MAPPING_FILE = "src/main/resources/UIMapping.properties";
     private Map<String, String> map;
     private Properties properties;
 
@@ -47,11 +46,6 @@ public class ConfigData {
 
         String method = partsOfLocators[0].substring(0, partsOfLocators[0].length() - 1);
         String target = partsOfLocators[1];
-
-/*        System.out.println(key);                //Logo
-        System.out.println(partsOfLocators[0]); //cssSelector(
-        System.out.println(method);          //cssSelector
-        System.out.println(target);             //.ellos.active*/
 
         // Return By class with appropriate method and target
         if (method.equals("xpath")) {
