@@ -1,9 +1,11 @@
 package tests;
 
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.Assert.assertTrue;
+
 
 /**
  * Created by zhabenya on 19.01.16.
@@ -14,87 +16,107 @@ public class LoginTests extends ClassFixture {
     @Test
     @Parameters({ "email", "pass" })
     public void loginPositiveTest(String email, String password){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillLoginEmailField(email);
-        loginPage.fillLoginPasswordField(password);
+        ellos.loginPage.fillLoginEmailField(email);
+        ellos.loginPage.fillLoginPasswordField(password);
 
-        loginPage.clickLoginButton();
-//        assertTrue(loginPage.checkLoggedIn());
-        header.logout();
-        assertTrue(loginPage.checkLoggedOut());
+        ellos.loginPage.clickLoginButton();
+//        assertTrue(ellos.loginPage.checkLoggedIn());
+        ellos.header.logout();
+        assertTrue(ellos.loginPage.checkLoggedOut());
     }
 
     @Test
     @Parameters({"pass"})
     public void loginNegativeNotRegisteredEmailTest(String password){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillLoginEmailField("admin@gmail.com");
-        loginPage.fillLoginPasswordField(password);
+        ellos.loginPage.fillLoginEmailField("admin@gmail.com");
+        ellos.loginPage.fillLoginPasswordField(password);
 
-        loginPage.clickLoginButton();
-        assertTrue(loginPage.checkLoginError());
+        ellos.loginPage.clickLoginButton();
+        assertTrue(ellos.loginPage.checkLoginError());
     }
 
     @Test
     @Parameters({"pass"})
     public void loginNegativeNotRegisteredEmailSubmitByEnterTest(String password){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillLoginEmailField("admin@gmail.com");
-        loginPage.fillLoginPasswordField(password);
+        ellos.loginPage.fillLoginEmailField("admin@gmail.com");
+        ellos.loginPage.fillLoginPasswordField(password);
 
-        loginPage.submitLoginFormByEnter();
-        assertTrue(loginPage.checkLoginError());
+        ellos.loginPage.submitLoginFormByEnter();
+        assertTrue(ellos.loginPage.checkLoginError());
     }
 
     @Test
     @Parameters({"pass"})
     public void loginNegativeEmptyEmailFieldTest(String password){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
+        ellos.loginPage.fillLoginEmailField("");
+        ellos.loginPage.fillLoginPasswordField(password);
 
-        loginPage.fillLoginEmailField("");
-        loginPage.fillLoginPasswordField(password);
-
-        loginPage.clickLoginButton();
-        assertTrue(loginPage.checkLoginEmptyEmailFieldError());
+        ellos.loginPage.clickLoginButton();
+        assertTrue(ellos.loginPage.checkLoginEmptyEmailFieldError());
     }
 
     @Test
     @Parameters({"email"})
     public void loginNegativeEmptyPasswordFieldTest(String email){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
+        ellos.loginPage.fillLoginEmailField(email);
+        ellos.loginPage.fillLoginPasswordField("");
 
-        loginPage.fillLoginEmailField(email);
-        loginPage.fillLoginPasswordField("");
-
-        loginPage.clickLoginButton();
-        assertTrue(loginPage.checkLoginEmptyPasswordFieldError());
+        ellos.loginPage.clickLoginButton();
+        assertTrue(ellos.loginPage.checkLoginEmptyPasswordFieldError());
     }
 
     @Test
     public void loginNegativeEmptyFieldsTest(){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
+        ellos.loginPage.fillLoginEmailField("");
+        ellos.loginPage.fillLoginPasswordField("");
 
-        loginPage.fillLoginEmailField("");
-        loginPage.fillLoginPasswordField("");
-
-        loginPage.clickLoginButton();
-        assertTrue(loginPage.checkLoginEmptyFieldsError());
+        ellos.loginPage.clickLoginButton();
+        assertTrue(ellos.loginPage.checkLoginEmptyFieldsError());
     }
 
     @Test
     @Parameters({"longString"})
     public void loginNegativeLongInputsTest(String longString){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
+        ellos.loginPage.fillLoginEmailField(longString);
+        ellos.loginPage.fillLoginPasswordField(longString);
 
-        loginPage.fillLoginEmailField(longString);
-        loginPage.fillLoginPasswordField(longString);
-
-        loginPage.clickLoginButton();
-        assertTrue(loginPage.checkLoginError());
+        ellos.loginPage.clickLoginButton();
+        assertTrue(ellos.loginPage.checkLoginError());
     }
 
+    @BeforeGroups("basket")
+    public void setUpGroup() {
+        ellos.header.clickLogo();
+        ellos.header.goToProductList("WomenClothes");
+        ellos.productListPage.goToSubcategory("Tops");
+        ellos.productListPage.goToProduct();
+        ellos.productPage.scrollToFields();
+        ellos.productPage.selectColor();
+        ellos.productPage.selectSize();
+        ellos.productPage.clickAddToCartButton();
+        ellos.productPage.goToBasketPage();
+        ellos.basketPage.checkout();
+        ellos.loginPage.checkAtLoginPage();
+    }
 
+    @Test(groups = "basket")
+    @Parameters({"email", "pass"})
+    public void loginBasketPositiveTest(String email, String password) {
+        ellos.loginPage.fillLoginEmailField(email);
+        ellos.loginPage.fillLoginPasswordField(password);
+
+        ellos.loginPage.clickLoginButton();
+        ellos.header.logout();
+        assertTrue(ellos.loginPage.checkLoggedOut());
+    }
 }

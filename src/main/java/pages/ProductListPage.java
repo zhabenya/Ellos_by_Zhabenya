@@ -2,43 +2,41 @@ package pages;
 
 import data.Product;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import utils.WebElementsActions;
+import utils.ClassNameUtil;
+import utils.WebDriverWrapper;
 
 import static pages.ProductPage.parsePrice;
 
 /**
  * Created by zhabenya on 27.01.16.
  */
-public class ProductListPage {
+public class ProductListPage extends Page {
 
-    private WebDriver driver;
-    private WebElementsActions web;
-    private static final Logger LOG = Logger.getLogger(LoginPage.class);
-    private Product product;
+    private static final Logger LOG = Logger.getLogger(ClassNameUtil.getCurrentClassName());
 
-    public ProductListPage(WebDriver driver, Product product) {
-        this.driver = driver;
-        this.product = product;
-        web = new WebElementsActions(driver);
+    public ProductListPage(WebDriverWrapper driver) {
+        super(driver);
     }
 
     public void goToSubcategory(String subcategory) {
-        String locator = subcategory + "Link";
-        web.waitForElementVisible(locator, 20);
+        web.waitForElementVisible(subcategory + "Link", 20);
         web.clickElement("TopsLink");
-//        LOG.info("Go to " + subcategory + " page " + locator);
     }
 
-    public void goToProduct() {
-        getProductInfo();
+    public Product goToProduct() {
+        Product product = getProductInfo();
         web.clickElement("FirstItemLink");
+        return product;
+
     }
 
-    private void getProductInfo() {
+    private Product getProductInfo() {
+        //TODO !!!!! create new product
+        Product product = new Product();
         product.setName(web.getElementText("FirstItemName"));
         product.setPrice(parsePrice(web.getElementText("FirstItemPrice")));
         product.setCurrency(web.getElementText("FirstItemCurrency"));
+        return product;
 //        LOG.info(web.getElementText("FirstItemName") + "////////////" + price);
     }
 }

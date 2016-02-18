@@ -1,15 +1,13 @@
 package tests;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import pages.Ellos;
 import utils.PropertyLoader;
+import utils.WebDriverFactory;
+import utils.WebDriverWrapper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,42 +17,25 @@ import java.util.concurrent.TimeUnit;
 @Test
 public class BrowserFixture {
 
-    static WebDriver driver;
-    /** Browsers constants */
-    public static final String CHROME = "chrome";
-    public static final String FIREFOX = "firefox";
-    public static final String INTERNET_EXPLORER = "ie";
-    public static final String PHANTOMJS = "phantomjs";
-
+    public static WebDriverWrapper driverWrapper;
+    public static Ellos ellos;
     public static final Logger LOG = Logger.getLogger(LoginTests.class);
-    public static final String browserName = PropertyLoader.loadProperty("browser.name");
+
+    public static final String wait = PropertyLoader.loadProperty("wait.timeout");
 
     @BeforeSuite(alwaysRun = true)
-    public static void setUp() throws Exception {
-//        driver = new FirefoxDriver();
-//        System.setProperty("webdriver.chrome.driver", "/home/tania/Downloads/Tools/chromedriver");
-//        driver = new ChromeDriver();
-//        driver = new PhantomJSDriver();
-        if(browserName.equals(FIREFOX)){
-            driver = new FirefoxDriver();
-        }else if(browserName.equals(PHANTOMJS)){
-            driver = new PhantomJSDriver();
-        } else if(browserName.equals(CHROME)){
-            driver = new ChromeDriver();
-        } else {
-            Assert.fail("invalid driver name");
-        }
+    public static void setBrowser() throws Exception {
+        driverWrapper = WebDriverFactory.initDriver();
+        ellos = new Ellos(driverWrapper);
 
-        LOG.info("Browser started");
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        driver.get("http://www.ellos.se/");
-        LOG.info("Start test");
+        driverWrapper.manage().timeouts().implicitlyWait(Long.parseLong(wait), TimeUnit.SECONDS);
+        driverWrapper.get("http://www.ellos.se/");
+        LOG.info("Start test suite");
     }
 
     @AfterSuite(alwaysRun = true)
     public static void tearDown() throws Exception {
         LOG.info("End test");
-        driver.quit();
+        driverWrapper.quit();
     }
 }

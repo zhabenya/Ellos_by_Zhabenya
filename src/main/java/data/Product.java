@@ -9,14 +9,14 @@ public class Product {
     private String name;
     private String color;
     private int price;
-    private int size;
+    private String  size;
     private String currency;
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(String size) {
         this.size = size;
     }
 

@@ -4,7 +4,8 @@ import data.UserData;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.Assert.assertTrue;
+
 
 /**
  * Created by zhabenya on 19.01.16.
@@ -14,123 +15,123 @@ public class RegistrationTests extends ClassFixture {
 
     @Test(dataProviderClass = UserData.class, dataProvider = "users")
     public void registrationPositiveTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkRegistered());
-        header.logout();
-        assertTrue(loginPage.checkLoggedOut());
+        assertTrue(ellos.loginPage.checkRegistered());
+        ellos.header.logout();
+        assertTrue(ellos.loginPage.checkLoggedOut());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativeEmptyEmailTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField("");
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField("");
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkRegistrationEmptyEmailError());
+        assertTrue(ellos.loginPage.checkRegistrationEmptyEmailError());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativeEmptyRepeatEmailTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField("");
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField("");
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkRegistrationEmptyRepeatEmailError());
+        assertTrue(ellos.loginPage.checkRegistrationEmptyRepeatEmailError());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativeEmptyPasswordTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField("");
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField("");
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkRegistrationEmptyPassError());
+        assertTrue(ellos.loginPage.checkRegistrationEmptyPassError());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativeEmptyRepeatPasswordTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField("");
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField("");
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkRegistrationEmptyRepeatPassError());
+        assertTrue(ellos.loginPage.checkRegistrationEmptyRepeatPassError());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativeExistingEmailTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkUserExistsError());
+        assertTrue(ellos.loginPage.checkUserExistsError());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativeExistingEmailSubmitByEnterTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.submitRegistrationFormByEnter();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.submitRegistrationFormByEnter();
 
-        assertTrue(loginPage.checkUserExistsError());
+        assertTrue(ellos.loginPage.checkUserExistsError());
     }
 
     @Test
     @Parameters({ "pass" })
     public void registrationNegativeIncorrectEmailTest(String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField("aaa");
-        loginPage.fillRepeatRegistrationEmailField("aaa");
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField("aaa");
+        ellos.loginPage.fillRepeatRegistrationEmailField("aaa");
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkIncorrectEmailError());
+        assertTrue(ellos.loginPage.checkIncorrectEmailError());
     }
 
     /*
@@ -139,61 +140,62 @@ public class RegistrationTests extends ClassFixture {
     @Test
     @Parameters({"longString", "pass"})
     public void registrationNegativeLongEmailTest(String longString, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(longString);
-        loginPage.fillRepeatRegistrationEmailField(longString);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(longString);
+        ellos.loginPage.fillRepeatRegistrationEmailField(longString);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkIncorrectEmailError());
+        assertTrue(ellos.loginPage.checkIncorrectEmailError());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativeEmailsDontMatchTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField("aaa" + email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField(pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField("aaa" + email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField(pass);
 
-        assertTrue(loginPage.checkEmailsDontMatchError());
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
+
+        assertTrue(ellos.loginPage.checkEmailsDontMatchError());
     }
 
     @Test
     @Parameters({ "email" })
     public void registrationNegativeShortPasswordTest(String email){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField("1");
-        loginPage.fillRepeatRegistrationPasswordField("1");
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField("1");
+        ellos.loginPage.fillRepeatRegistrationPasswordField("1");
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkShortPasswordError());
+        assertTrue(ellos.loginPage.checkShortPasswordError());
     }
 
     @Test
     @Parameters({ "email", "pass" })
     public void registrationNegativePasswordsDontMatchTest(String email, String pass){
-        header.goToLoginPage();
+        ellos.header.goToLoginPage();
 
-        loginPage.fillRegistrationEmailField(email);
-        loginPage.fillRepeatRegistrationEmailField(email);
-        loginPage.fillRegistrationPasswordField(pass);
-        loginPage.fillRepeatRegistrationPasswordField("aaa" + pass);
-        loginPage.uncheckNewsletters();
-        loginPage.clickRegisterButton();
+        ellos.loginPage.fillRegistrationEmailField(email);
+        ellos.loginPage.fillRepeatRegistrationEmailField(email);
+        ellos.loginPage.fillRegistrationPasswordField(pass);
+        ellos.loginPage.fillRepeatRegistrationPasswordField("aaa" + pass);
+        ellos.loginPage.uncheckNewsletters();
+        ellos.loginPage.clickRegisterSubmitButton();
 
-        assertTrue(loginPage.checkPasswordsDontMatchError());
+        assertTrue(ellos.loginPage.checkPasswordsDontMatchError());
     }
 
 }

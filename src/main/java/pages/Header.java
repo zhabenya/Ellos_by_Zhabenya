@@ -1,32 +1,26 @@
 package pages;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import utils.WebElementsActions;
+import utils.ClassNameUtil;
+import utils.WebDriverWrapper;
 
 /**
  * Created by zhabenya on 19.01.16.
  */
-public class Header {
+public class Header extends Page {
 
-    private WebDriver driver;
-    private WebElementsActions web;
-    private static final Logger LOG = Logger.getLogger(Header.class);
+    private static final Logger LOG = Logger.getLogger(ClassNameUtil.getCurrentClassName());
 
-
-    public Header(WebDriver driver) {
-        this.driver = driver;
-        web = new WebElementsActions(driver);
+    public Header(WebDriverWrapper driver) {
+        super(driver);
     }
 
     public void clickLogo() {
         web.clickElement("Logo");
-//        LOG.info("Click on Logo Button");
     }
 
     public void goToLoginPage() {
         web.clickElement("LoginPageLink");
-//        LOG.info("Go to login page");
     }
 
     public void logout() {

@@ -1,21 +1,24 @@
 package pages;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import utils.WebElementsActions;
+import utils.ClassNameUtil;
+import utils.PropertyLoader;
+import utils.WebDriverWrapper;
 
 /**
  * Created by zhabenya on 27.01.16.
  */
-public class MainPage {
+public class MainPage extends Page {
 
-    WebDriver driver;
-    WebElementsActions web;
-    private static final Logger LOG = Logger.getLogger(LoginPage.class);
+    private static final String MAIN_PAGE = PropertyLoader.loadProperty("site.url");
 
-    public MainPage(WebDriver driver) {
-        this.driver = driver;
+    private static final Logger LOG = Logger.getLogger(ClassNameUtil.getCurrentClassName());
+
+    public MainPage(WebDriverWrapper driver) {
+        super(driver, MAIN_PAGE);
     }
 
-
+    public void goToBasketRegistrationPage() {
+        goToUrl("https://www.ellos.se/LoginAndRegistration/RegisterCustomer");
+    }
 }

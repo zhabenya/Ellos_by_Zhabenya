@@ -12,12 +12,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class WebElementsActions {
 
-    private WebDriver driver;
+    private WebDriverWrapper driver;
     private ConfigData config;
     public static WebDriverWait waitForElement;
-    private static final Logger LOG = Logger.getLogger(WebElementsActions.class);
+    private static final Logger LOG = Logger.getLogger(ClassNameUtil.getCurrentClassName());
 
-    public WebElementsActions(WebDriver driver) {
+    public WebElementsActions(WebDriverWrapper driver) {
         this.driver = driver;
         this.config = ConfigData.getConfig();
         waitForElement = new WebDriverWait(driver, 20);
@@ -33,16 +33,6 @@ public class WebElementsActions {
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-
-    /**
-     * CLick button
-     * */
-    public void clickButton(String buttonLocator) {
-        moveDownPage();
-        clickElement(buttonLocator);
-        LOG.info("Click " + buttonLocator);
     }
 
     /**
@@ -113,8 +103,8 @@ public class WebElementsActions {
             return driver.findElement(config.ui(elementLocator)).isDisplayed();
         } catch (ElementNotFoundException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     /**
@@ -167,26 +157,6 @@ public class WebElementsActions {
         //log.info("moved To Element " + moveToLocator + "and clicked on" + clickToElement);
     }
 
-    /**
-    * Refresh page
-    * */
-    public void refreshPage(){
-        driver.navigate().refresh();
-        LOG.info("Refresh page");
-    }
-
-    /**
-    * Check if current URL contains page link
-    * */
-    public boolean checkAtPage(String page){
-        return driver.getCurrentUrl().contains(page);
-    }
-
-    public void moveDownPage(){
-        JavascriptExecutor jsx = (JavascriptExecutor)driver;
-        jsx.executeScript("window.scrollBy(0,100)", "");
-    }
-
     public String getElementText(String elementLocator){
         try {
             return driver.findElement(config.ui(elementLocator)).getText();
@@ -216,14 +186,6 @@ public class WebElementsActions {
             WebDriverWait wait = new WebDriverWait(driver, timeoutInS);
             wait.until(ExpectedConditions.visibilityOfElementLocated(config.ui(elementLocator)));
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void movePageWithSpace(String headerLocator){
-        try {
-            driver.findElement(config.ui(headerLocator)).sendKeys(Keys.SPACE);
-        } catch (ElementNotFoundException e) {
             e.printStackTrace();
         }
     }

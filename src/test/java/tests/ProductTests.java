@@ -15,93 +15,93 @@ public class ProductTests extends ProductsFixture {
 
     @BeforeGroups("logged")
     public static void setUpGroup() throws Exception {
-        header.clickLogo();
-        header.goToLoginPage();
-        loginPage.fillLoginEmailField("rude.zhabenya@gmail.com");
-        loginPage.fillLoginPasswordField("gr@yBulb40");
-        loginPage.clickLoginButton();
+        ellos.header.clickLogo();
+        ellos.header.goToLoginPage();
+        ellos.loginPage.fillLoginEmailField("rude.zhabenya@gmail.com");
+        ellos.loginPage.fillLoginPasswordField("gr@yBulb40");
+        ellos.loginPage.clickLoginButton();
     }
 
     @AfterGroups("logged")
     public void tearDownTest(){
-        header.logout();
+        ellos.header.logout();
     }
 
     @BeforeMethod
     public static void setUpTest() throws Exception {
-        header.clickLogo();
-        header.goToProductList("WomenClothes");
-        productListPage.goToSubcategory("Tops");
-        productListPage.goToProduct();
-        productPage.checkProductInfo();
-        productPage.scrollToFields();
+        ellos.header.clickLogo();
+        ellos.header.goToProductList("WomenClothes");
+        ellos.productListPage.goToSubcategory("Tops");
+        product = ellos.productListPage.goToProduct();
+        ellos.productPage.checkProductInfo(product);
+        ellos.productPage.scrollToFields();
     }
 
     @Test
     public void positiveTest(){
-        productPage.selectColor();
-        productPage.selectSize();
-        productPage.clickAddToCartButton();
-        assertTrue(productPage.checkItemAddedToBasket());
+        ellos.productPage.selectColor();
+        ellos.productPage.selectSize();
+        ellos.productPage.clickAddToCartButton();
+        assertTrue(ellos.productPage.checkItemAddedToBasket(product));
     }
 
     @Test
     public void negativeAddToCartNoSize(){
-        productPage.clickAddToCartButton();
-        assertTrue(productPage.checkSizeNotSelectedError());
+        ellos.productPage.clickAddToCartButton();
+        assertTrue(ellos.productPage.checkSizeNotSelectedError());
     }
 
     @Test
     public void addToWishList(){
-        productPage.selectColor();
-        productPage.selectSize();
-        productPage.addToWishList();
-        assertTrue(loginPage.checkAtLoginPage());
+        ellos.productPage.selectColor();
+        ellos.productPage.selectSize();
+        ellos.productPage.addToWishList();
+        assertTrue(ellos.loginPage.checkAtLoginPage());
     }
 
     @Test(groups = "logged")
     public void loggedAddToWishList(){
-        productPage.selectColor();
-        productPage.selectSize();
-        productPage.addToWishList();
-        assertTrue(productPage.checkItemAddedToWishList());
+        ellos.productPage.selectColor();
+        ellos.productPage.selectSize();
+        ellos.productPage.addToWishList();
+        assertTrue(ellos.productPage.checkItemAddedToWishList());
     }
 
     @Test
     public void viewFullImage(){
-        productPage.clickImage();
-        assertTrue(productPage.checkFullImage());
-        productPage.closeFullImage();
+        ellos.productPage.clickImage();
+        assertTrue(ellos.productPage.checkFullImage());
+        ellos.productPage.closeFullImage();
     }
 
     @Test
     public void switchTabs() {
-        productPage.goToTabs();
-        assertTrue(productPage.checkTabs());
+        ellos.productPage.goToTabs();
+        assertTrue(ellos.productPage.checkTabs());
     }
 
-    @Test
+    @Test(enabled = false)
     public void showMoreAboutProduct(){
-        productPage.clickShowMoreLink();
-        assertTrue(productPage.checkDescriptionTabEnabled());
+        ellos.productPage.clickShowMoreLink();
+        assertTrue(ellos.productPage.checkDescriptionTabEnabled());
     }
 
     @Test
     public void viewRating(){
-        productPage.clickRatingLink();
-        assertTrue(productPage.checkRatingTabEnabled());
+        ellos.productPage.clickRatingLink();
+        assertTrue(ellos.productPage.checkRatingTabEnabled());
     }
 
     @Test
     public void writeReview(){
-        productPage.clickWriteReviewButton();
-        assertTrue(loginPage.checkAtLoginPage());
+        ellos.productPage.clickWriteReviewButton();
+        assertTrue(ellos.loginPage.checkAtLoginPage());
     }
 
     @Test(groups = "logged")
     public void loggedWriteReview(){
-        productPage.clickWriteReviewButton();
-        assertTrue(productPage.checkReviewFormEnabled());
+        ellos.productPage.clickWriteReviewButton();
+        assertTrue(ellos.productPage.checkReviewFormEnabled());
     }
 
 

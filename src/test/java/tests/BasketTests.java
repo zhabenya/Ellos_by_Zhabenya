@@ -12,31 +12,29 @@ public class BasketTests extends ProductsFixture {
 
     @BeforeMethod
     public static void setUpTest() throws Exception {
-        String category = "WomenClothes";
-        String subcategory = "Tops";
-
-        header.clickLogo();
-        header.goToProductList(category);
-        productListPage.goToSubcategory(subcategory);
-        productListPage.goToProduct();
-        productPage.scrollToFields();
-        productPage.selectColor();
-        productPage.selectSize();
-        productPage.clickAddToCartButton();
-        productPage.goToBasketPage();
+        ellos.header.clickLogo();
+        ellos.header.goToProductList("WomenClothes");
+        ellos.productListPage.goToSubcategory("Tops");
+        product = ellos.productListPage.goToProduct();
+        ellos.productPage.scrollToFields();
+        ellos.productPage.selectColor();
+        ellos.productPage.selectSize();
+        ellos.productPage.addProductInfo(product);
+        ellos.productPage.clickAddToCartButton();
+        ellos.productPage.checkCartCorrectInfo(product);
+        ellos.productPage.goToBasketPage();
     }
 
     @Test
     public void positiveCheckout(){
-        basketPage.clickCheckoutButton();
-        assertTrue(loginPage.checkAtLoginPage());
+        ellos.basketPage.checkout();
+        assertTrue(ellos.loginPage.checkAtLoginPage());
     }
 
     @Test
     public void negativeIncorrectItemsQuantity(){
-        basketPage.clickChangeQuantityButton();
-        basketPage.setItemsQuantity(0);
-        assertTrue(basketPage.checkIncorrectItemsQuantity());
+        ellos.basketPage.changeQuantity(0);
+        assertTrue(ellos.basketPage.checkIncorrectItemsQuantity());
     }
 
 }

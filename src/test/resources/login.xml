@@ -1,14 +1,23 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="LoginSuite" verbose="1" >
-    <parameter name="email" value="rude.zhabenya@gmail.com" />
-    <parameter name="pass" value="gr@yBulb40" />
+    <parameter name="email" value="test1111@gmail.com" />
+    <parameter name="pass" value="1111" />
+    <parameter name="longString" value="veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongstring" />
+
     <test name="LoginPageTest">
+        <!--<groups>
+            <run>
+                <include name="new"/>
+            </run>
+        </groups>-->
         <classes>
             <class name="tests.LoginTests"/>
             <class name="tests.RegistrationTests"/>
+            <!--<class name="tests.CheckoutTests"/>-->
+            <class name="tests.RegistrationBasketTests"/>
         </classes>
     </test>
-    <test name="negativeLongInputsTest">
+    <!--<test name="negativeLongInputsTest">
         <parameter name="longString" value="veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongstring" />
         <classes>
             <class name="tests.LoginTests">
@@ -21,6 +30,11 @@
                     <include name="registrationNegativeLongEmailTest"/>
                 </methods>
             </class>
+            <class name="tests.RegistrationBasketTests">
+                <methods>
+                    <include name="registrationBasketNegativeLongEmailsTest"/>
+                </methods>
+            </class>
         </classes>
-    </test>
+    </test>-->
 </suite>
