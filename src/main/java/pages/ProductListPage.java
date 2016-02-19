@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import utils.ClassNameUtil;
 import utils.WebDriverWrapper;
 
-import static pages.ProductPage.parsePrice;
+import static data.Parsers.parsePrice;
 
 /**
  * Created by zhabenya on 27.01.16.
@@ -31,12 +31,10 @@ public class ProductListPage extends Page {
     }
 
     private Product getProductInfo() {
-        //TODO !!!!! create new product
         Product product = new Product();
         product.setName(web.getElementText("FirstItemName"));
         product.setPrice(parsePrice(web.getElementText("FirstItemPrice")));
         product.setCurrency(web.getElementText("FirstItemCurrency"));
         return product;
-//        LOG.info(web.getElementText("FirstItemName") + "////////////" + price);
     }
 }

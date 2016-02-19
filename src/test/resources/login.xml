@@ -13,8 +13,8 @@
         <classes>
             <class name="tests.LoginTests"/>
             <class name="tests.RegistrationTests"/>
-            <!--<class name="tests.CheckoutTests"/>-->
             <class name="tests.RegistrationBasketTests"/>
+            <!--<class name="tests.CheckoutTests"/>-->
         </classes>
     </test>
     <!--<test name="negativeLongInputsTest">

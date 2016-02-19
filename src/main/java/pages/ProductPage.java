@@ -5,7 +5,8 @@ import org.apache.log4j.Logger;
 import utils.ClassNameUtil;
 import utils.WebDriverWrapper;
 
-import static java.lang.Integer.parseInt;
+import static data.Parsers.parsePrice;
+import static data.Parsers.parseProductName;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -19,21 +20,14 @@ public class ProductPage extends Page {
         super(driver);
     }
 
-    public static Integer parsePrice(String priceText) {
-        priceText = priceText.replaceAll("\\D+","");;
-        return parseInt(priceText);
-    }
-
     public void checkProductInfo(Product product) {
-        String name = web.getElementText("ProductName");
-        assertTrue(name.equalsIgnoreCase(product.getName()));
-        Integer price = parsePrice(web.getElementText("ProductPrice"));
-        assertTrue(price == product.getPrice());
-        String currency = web.getElementText("ProductCurrency");
-        assertTrue(currency.equalsIgnoreCase(product.getCurrency()));
+        assertTrue(web.getElementText("ProductName").equalsIgnoreCase(product.getName()));
+        assertTrue(parsePrice(web.getElementText("ProductPrice")) == product.getPrice());
+        assertTrue(web.getElementText("ProductCurrency").equalsIgnoreCase(product.getCurrency()));
     }
 
     public Product addProductInfo(Product product){
+        product.setName(web.getElementText("ProductName"));
         product.setId(web.getElementText("ProductId"));
         product.setColor(web.getElementText("ProductColor"));
         product.setSize(web.getElementText("ProductSize"));
@@ -87,22 +81,15 @@ public class ProductPage extends Page {
 
     public void checkCartCorrectInfo(Product product){
         web.clickElement("CartContent");
-//        TODO: Klänning i geo... - wtf???
-
-//        System.out.println(web.getElementText("CartProductTitle") + "\n" + product.getName() );
-//        assertTrue(web.getElementText("CartProductTitle").equalsIgnoreCase(product.getName()));
+        assertTrue(product.getName().contains(parseProductName(web.getElementText("CartProductTitle"))));
         assertTrue(checkCartProductSize(product));
-
-        System.out.println(parsePrice(web.getElementText("CartProductPrice")) + "//////////"+ product.getPrice());
         assertTrue(parsePrice(web.getElementText("CartProductPrice")) == product.getPrice());
-        System.out.println("price");
         assertTrue(web.getElementText("CartProductCurrency").equalsIgnoreCase(product.getCurrency()));
         LOG.info("Item added with correct info");
     }
 
     private boolean checkCartProductSize(Product product) {
         String size = web.getElementText("CartProductSize");
-//        System.out.println(size + "/////////" + product.getSize());
         if (size.contains(product.getSize())){
             product.setSize(size);
             return true;

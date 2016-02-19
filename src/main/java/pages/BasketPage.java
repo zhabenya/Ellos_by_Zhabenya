@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import utils.ClassNameUtil;
 import utils.WebDriverWrapper;
 
+import static data.Parsers.parsePrice;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -31,7 +32,10 @@ public class BasketPage extends Page {
         assertTrue(id.equalsIgnoreCase(product.getId()));
         String name = web.getElementText("BasketProductName");
         assertTrue(name.equalsIgnoreCase(product.getName()));
-        //TODO: fucking discount #ctl00_ctl00_conMain_conMain_ucOrderView_ucOnlineOrderList_repParcels_ctl00_repProducts_ctl00_OrderListPrice1_lCurrentPrice
+        //TODO: discount #ctl00_ctl00_conMain_conMain_ucOrderView_ucOnlineOrderList_repParcels_ctl00_repProducts_ctl00_OrderListPrice1_lCurrentPrice
+//        web.isElementPresent() - not to throw exception
+
+
 //        Integer price = parsePrice(web.getElementText("BasketProductPrice"));
 //        assertTrue(price == product.getPrice());
 //        String currency = web.getElementText("BasketProductCurrency");
@@ -56,6 +60,29 @@ public class BasketPage extends Page {
     public boolean checkIncorrectItemsQuantity() {
         if (web.isElementPresent("IncorrectItemsValueError")) {
             LOG.info("See incorrect items quantity error");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkTotalIsCorrect(Product product, Integer number) {
+        Integer total = number * product.getPrice();
+        //TODO
+        System.out.println(total + "////////"+ parsePrice(web.getElementText("ProductTotal")));
+        if (total == parsePrice(web.getElementText("ProductTotal"))){
+            LOG.info("Sum calculated correctly");
+            return true;
+        }
+        return false;
+    }
+
+    public void removeProduct() {
+        web.clickElement("RemoveProduct");
+    }
+
+    public boolean checkEmptyBasket(){
+        if (web.isElementPresent("EmptyBasketField")){
+            LOG.info("The basket is empty");
             return true;
         }
         return false;

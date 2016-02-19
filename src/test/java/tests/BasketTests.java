@@ -22,19 +22,34 @@ public class BasketTests extends ProductsFixture {
         ellos.productPage.addProductInfo(product);
         ellos.productPage.clickAddToCartButton();
         ellos.productPage.checkCartCorrectInfo(product);
-        ellos.productPage.goToBasketPage();
     }
 
     @Test
     public void positiveCheckout(){
+        ellos.productPage.goToBasketPage();
         ellos.basketPage.checkout();
         assertTrue(ellos.loginPage.checkAtLoginPage());
     }
 
     @Test
     public void negativeIncorrectItemsQuantity(){
+        ellos.productPage.goToBasketPage();
         ellos.basketPage.changeQuantity(0);
         assertTrue(ellos.basketPage.checkIncorrectItemsQuantity());
+    }
+
+    @Test(enabled = false)
+    public void checkTotal(){
+        ellos.productPage.goToBasketPage();
+        ellos.basketPage.changeQuantity(2);
+        assertTrue(ellos.basketPage.checkTotalIsCorrect(product, 2));
+    }
+
+    @Test
+    public void removeItem(){
+        ellos.productPage.goToBasketPage();
+        ellos.basketPage.removeProduct();
+        assertTrue(ellos.basketPage.checkEmptyBasket());
     }
 
 }

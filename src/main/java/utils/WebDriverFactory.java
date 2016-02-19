@@ -1,9 +1,15 @@
 package utils;
 
+import net.anthavio.phanbedder.Phanbedder;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
+
+import java.io.File;
 
 /**
  * Created by zhabenya on 13.02.16.
@@ -32,12 +38,10 @@ public class WebDriverFactory {
         if(FIREFOX.equals(browserName)){
             driverWrapper = new WebDriverWrapper( new FirefoxDriver());
         }else if(PHANTOMJS.equals(browserName)){
-/*
             File phantomjs = Phanbedder.unpack();
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, phantomjs.getAbsolutePath());
             driverWrapper = new WebDriverWrapper( new PhantomJSDriver(caps));
-*/
 
         } else if(CHROME.equals(browserName)){
             ChromeOptions options = new ChromeOptions();
