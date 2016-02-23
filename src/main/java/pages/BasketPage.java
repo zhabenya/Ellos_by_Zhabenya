@@ -67,9 +67,8 @@ public class BasketPage extends Page {
 
     public boolean checkTotalIsCorrect(Product product, Integer number) {
         Integer total = number * product.getPrice();
-        //TODO
-        System.out.println(total + "////////"+ parsePrice(web.getElementText("ProductTotal")));
-        if (total == parsePrice(web.getElementText("ProductTotal"))){
+//        System.out.println(total + "////////"+ parsePrice(web.getElementText("ProductTotal")));
+        if (total.equals(parsePrice(web.getElementText("ProductTotal")))){
             LOG.info("Sum calculated correctly");
             return true;
         }

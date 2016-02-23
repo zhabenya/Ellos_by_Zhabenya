@@ -38,7 +38,7 @@ public class BasketTests extends ProductsFixture {
         assertTrue(ellos.basketPage.checkIncorrectItemsQuantity());
     }
 
-    @Test(enabled = false)
+    @Test
     public void checkTotal(){
         ellos.productPage.goToBasketPage();
         ellos.basketPage.changeQuantity(2);

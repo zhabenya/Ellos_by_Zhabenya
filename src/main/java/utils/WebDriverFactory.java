@@ -16,19 +16,16 @@ import java.io.File;
  */
 public class WebDriverFactory {
 
-    public static WebDriverWrapper driverWrapper;
-
+    public static final String browserName = PropertyLoader.loadProperty("browser.name");
+    public static final String browserVersion = PropertyLoader.loadProperty("browser.version");
+    public static final String platform = PropertyLoader.loadProperty("platform");
+    public static final String grid = PropertyLoader.loadProperty("grid2.hub");
     /*Browsers constants*/
     private static final String FIREFOX = "firefox";
     private static final String CHROME = "chrome";
     private static final String HTML_UNIT = "htmlunit";
     private static final String PHANTOMJS = "phantomjs";
-
-    public static final String browserName = PropertyLoader.loadProperty("browser.name");
-    public static final String browserVersion = PropertyLoader.loadProperty("browser.version");
-    public static final String platform = PropertyLoader.loadProperty("browser.platform");
-
-    public static final String grid = PropertyLoader.loadProperty("grid2.hub");
+    public static WebDriverWrapper driverWrapper;
 
     public WebDriverFactory() {
     }

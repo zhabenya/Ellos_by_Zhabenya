@@ -210,7 +210,7 @@ public class LoginPage extends Page {
 
     public void fillMobile(String number) {
         web.fillField("MobileInput", number);
-        moveDownPage();
+//        moveDownPage();
     }
 
     public void checkReceivePackageMessages() {
@@ -239,7 +239,7 @@ public class LoginPage extends Page {
     }
 
     public void submitRegistrationForm() {
-        moveDownPage();
+//        moveDownPage();
         web.clickElement("ContinueButton");
     }
 

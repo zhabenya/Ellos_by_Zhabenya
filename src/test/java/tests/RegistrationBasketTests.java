@@ -51,7 +51,6 @@ public class RegistrationBasketTests extends ClassFixture {
         ellos.header.logout();
     }
 
-    //TODO 2 positive?
     @Test(dataProviderClass = UserData.class, dataProvider = "users")
     public void registrationBasketPositiveEmptyMobileTest(String email, String password) {
         ellos.mainPage.goToBasketRegistrationPage();
@@ -135,7 +134,8 @@ public class RegistrationBasketTests extends ClassFixture {
     //TODO when input email with special characters $* error Incorrect password (Felaktigt användarnamn)
 
     //TODO
-    @Test(enabled = false)
+    @Test
+//            (enabled = false)
     public void registrationBasketNegativeBlankFieldsTest() {
 //        ellos.loginPage.goToSubmitButton();
         ellos.mainPage.goToBasketRegistrationPage();
@@ -148,6 +148,7 @@ public class RegistrationBasketTests extends ClassFixture {
         ellos.loginPage.fillCity("");
         ellos.loginPage.fillMobile("");
         ellos.loginPage.submitRegistrationForm();
+        //submit by enter
         assertTrue(ellos.loginPage.checkEmptyFieldsError());
     }
 

@@ -1,14 +1,12 @@
 package pages;
 
 import utils.WebDriverWrapper;
-import utils.WebElementsActions;
 
 /**
  * Created by zhabenya on 13.02.16.
  */
 public class Ellos {
 
-    public WebElementsActions web;
     public Header header;
     public MainPage mainPage;
     public LoginPage loginPage;
@@ -21,8 +19,6 @@ public class Ellos {
     //public Mock mock;
 
     public Ellos(WebDriverWrapper driver) {
-        web  = new WebElementsActions(driver);
-
         header = new Header(driver);
         mainPage = new MainPage(driver);
         loginPage = new LoginPage(driver);
